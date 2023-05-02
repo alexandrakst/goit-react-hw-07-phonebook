@@ -1,18 +1,24 @@
+import { useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import { Heading, Contacts } from './App.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact } from '../redux/contactsSlice';
-import { setFilter } from '../redux/filterSlice';
+import { setFilter } from '../redux/filterReducer';
 import Form from './Form/Form';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import { Heading, Contacts } from './App.styled';
+import * as contactsOperations from '../redux/contactsOperations';
+import * as contactsSelectors from '../redux/contactsSelectors';
 
 export default function App() {
   const dispatch = useDispatch();
 
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(contactsSelectors.getContacts);
 
   const filter = useSelector(state => state.filter);
+
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
 
   const formSubmitHandler = data => {
     const contact = {
@@ -28,11 +34,11 @@ export default function App() {
     if (dublicateContact || dublicateNumber) {
       return alert(`${data.name} is already in contacts`);
     }
-    dispatch(addContact(contact));
+    dispatch(contactsOperations.addContact(contact));
   };
 
   const onDeleteContact = id => {
-    dispatch(deleteContact(id));
+    dispatch(contactsOperations.deleteContact(id));
   };
 
   const changeFilter = e => {

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Label, Input, Div, Button } from './Form.styled';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { Label, Input, Div, Button } from './Form.styled';
 
 export default function Form({ onSubmit }) {
   const [name, setName] = useState('');

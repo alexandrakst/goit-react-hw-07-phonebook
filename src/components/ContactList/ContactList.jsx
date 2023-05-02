@@ -1,12 +1,11 @@
 import { Li, Ul, P, Button } from './ContactList.styled';
-import PropTypes from 'prop-types';
 
 const ContactList = ({ contacts, onDeleteContact }) => (
   <Ul>
-    {contacts.map(({ id, name, number }) => (
+    {contacts.map(({ id, name, phone }) => (
       <Li key={id}>
         <P>
-          {name}: {number}
+          {name}: {phone}
         </P>
         <Button type="button" onClick={() => onDeleteContact(id)}>
           Delete
@@ -15,10 +14,5 @@ const ContactList = ({ contacts, onDeleteContact }) => (
     ))}
   </Ul>
 );
-
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-};
 
 export default ContactList;
